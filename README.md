@@ -40,9 +40,9 @@ family:database      → all DB-related exceptions
 
 | Dependency | Version |
 |---|---|
-| PHP | `^8.1` |
-| Laravel | `^10.0 \| ^11.0 \| ^12.0` |
-| laravel/telescope | `^4.0 \| ^5.0` |
+| PHP | `^8.3` |
+| Laravel | `^11.0 \| ^12.0 \| ^13.0` |
+| laravel/telescope | `^5.0` |
 
 ---
 

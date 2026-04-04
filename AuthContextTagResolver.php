@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags\TagResolvers;
 
 use Laravel\Telescope\EntryType;
@@ -12,18 +14,13 @@ class AuthContextTagResolver implements TagResolverInterface
         return $entry->type === EntryType::REQUEST;
     }
 
+    /** @return list<string> */
     public function resolve(IncomingEntry $entry): array
     {
-        $tags = [];
-
         $userId = $entry->content['user']['id'] ?? null;
 
-        if ($userId) {
-            $tags[] = 'auth:authenticated';
-        } else {
-            $tags[] = 'auth:guest';
-        }
-
-        return $tags;
+        return $userId !== null
+            ? ['auth:authenticated']
+            : ['auth:guest'];
     }
 }

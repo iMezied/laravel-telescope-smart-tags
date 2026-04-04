@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags;
 
 use Laravel\Telescope\IncomingEntry;
@@ -7,8 +9,8 @@ use Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
 
 class TagRegistry
 {
-    /** @var TagResolverInterface[] */
-    protected array $resolvers = [];
+    /** @var list<TagResolverInterface> */
+    private array $resolvers = [];
 
     public function add(TagResolverInterface $resolver): static
     {
@@ -27,7 +29,7 @@ class TagRegistry
     /**
      * Run all matching resolvers against the entry and return merged unique tags.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function resolve(IncomingEntry $entry): array
     {
@@ -41,11 +43,12 @@ class TagRegistry
             }
         }
 
+        /** @var list<string> */
         return array_values(array_unique($tags));
     }
 
     /**
-     * @return TagResolverInterface[]
+     * @return list<TagResolverInterface>
      */
     public function all(): array
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags\TagResolvers;
 
 use Laravel\Telescope\IncomingEntry;
@@ -14,7 +16,7 @@ interface TagResolverInterface
     /**
      * Resolve and return an array of tags for the given entry.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function resolve(IncomingEntry $entry): array;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags\TagResolvers;
 
 use Laravel\Telescope\EntryType;
@@ -7,10 +9,8 @@ use Laravel\Telescope\IncomingEntry;
 
 class HttpStatusTagResolver implements TagResolverInterface
 {
-    /**
-     * Semantic aliases for specific HTTP status codes.
-     */
-    protected array $semanticMap = [
+    /** @var array<int, string> Default semantic aliases for well-known HTTP status codes */
+    private const array DEFAULT_SEMANTIC_MAP = [
         400 => 'bad-request',
         401 => 'unauthorized',
         403 => 'forbidden',
@@ -30,13 +30,19 @@ class HttpStatusTagResolver implements TagResolverInterface
         504 => 'gateway-timeout',
     ];
 
+    /** @var array<int, string> */
+    private readonly array $semanticMap;
+
+    /**
+     * @param  array<int, string>  $customSemanticMap  Override or extend the default semantic map
+     */
     public function __construct(
-        protected bool $includeExactStatus = true,
-        protected bool $includeStatusFamily = true,
-        protected bool $includeSemanticAlias = true,
-        protected array $customSemanticMap = [],
+        private readonly bool $includeExactStatus = true,
+        private readonly bool $includeStatusFamily = true,
+        private readonly bool $includeSemanticAlias = true,
+        array $customSemanticMap = [],
     ) {
-        $this->semanticMap = array_merge($this->semanticMap, $customSemanticMap);
+        $this->semanticMap = [...self::DEFAULT_SEMANTIC_MAP, ...$customSemanticMap];
     }
 
     public function supports(IncomingEntry $entry): bool
@@ -44,15 +50,17 @@ class HttpStatusTagResolver implements TagResolverInterface
         return $entry->type === EntryType::REQUEST;
     }
 
+    /** @return list<string> */
     public function resolve(IncomingEntry $entry): array
     {
         $status = $entry->content['response_status'] ?? null;
 
-        if (! $status) {
+        if (! is_int($status) && ! is_numeric($status)) {
             return [];
         }
 
-        $tags = [];
+        $status = (int) $status;
+        $tags   = [];
 
         if ($this->includeExactStatus) {
             $tags[] = "http:{$status}";
@@ -68,7 +76,7 @@ class HttpStatusTagResolver implements TagResolverInterface
             };
         }
 
-        if ($this->includeSemanticAlias && isset($this->semanticMap[$status])) {
+        if ($this->includeSemanticAlias && array_key_exists($status, $this->semanticMap)) {
             $tags[] = $this->semanticMap[$status];
         }
 

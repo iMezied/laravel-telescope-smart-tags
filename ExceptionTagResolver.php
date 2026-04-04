@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags\TagResolvers;
 
 use Laravel\Telescope\EntryType;
@@ -7,26 +9,34 @@ use Laravel\Telescope\IncomingEntry;
 
 class ExceptionTagResolver implements TagResolverInterface
 {
+    /** @var array<class-string, string> */
+    private const array DEFAULT_FAMILY_MAP = [
+        'Illuminate\Validation\ValidationException'              => 'family:validation',
+        'Illuminate\Auth\AuthenticationException'                => 'family:auth',
+        'Illuminate\Auth\Access\AuthorizationException'          => 'family:auth',
+        'Illuminate\Database\Eloquent\ModelNotFoundException'    => 'family:database',
+        'Illuminate\Database\QueryException'                     => 'family:database',
+        'Illuminate\Http\Exceptions\ThrottleRequestsException'  => 'family:rate-limit',
+        'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'          => 'family:http',
+        'Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException'  => 'family:http',
+        'BadMethodCallException'  => 'family:logic',
+        'InvalidArgumentException'=> 'family:logic',
+        'RuntimeException'        => 'family:runtime',
+        'TypeError'               => 'family:type',
+    ];
+
+    /** @var array<class-string, string> */
+    private readonly array $exceptionFamilyMap;
+
+    /**
+     * @param  array<class-string, string>  $exceptionFamilyMap  Merged on top of the defaults
+     */
     public function __construct(
-        protected bool $includeExceptionClass = true,
-        protected bool $includeExceptionFamily = true,
-        protected array $exceptionFamilyMap = [],
+        private readonly bool $includeExceptionClass = true,
+        private readonly bool $includeExceptionFamily = true,
+        array $exceptionFamilyMap = [],
     ) {
-        // Default family groupings for common Laravel/PHP exceptions
-        $this->exceptionFamilyMap = array_merge([
-            'Illuminate\Validation\ValidationException'          => 'family:validation',
-            'Illuminate\Auth\AuthenticationException'            => 'family:auth',
-            'Illuminate\Auth\Access\AuthorizationException'      => 'family:auth',
-            'Illuminate\Database\Eloquent\ModelNotFoundException' => 'family:database',
-            'Illuminate\Database\QueryException'                 => 'family:database',
-            'Illuminate\Http\Exceptions\ThrottleRequestsException' => 'family:rate-limit',
-            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' => 'family:http',
-            'Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException' => 'family:http',
-            'BadMethodCallException'                             => 'family:logic',
-            'InvalidArgumentException'                           => 'family:logic',
-            'RuntimeException'                                   => 'family:runtime',
-            'TypeError'                                          => 'family:type',
-        ], $exceptionFamilyMap);
+        $this->exceptionFamilyMap = [...self::DEFAULT_FAMILY_MAP, ...$exceptionFamilyMap];
     }
 
     public function supports(IncomingEntry $entry): bool
@@ -34,20 +44,19 @@ class ExceptionTagResolver implements TagResolverInterface
         return $entry->type === EntryType::EXCEPTION;
     }
 
+    /** @return list<string> */
     public function resolve(IncomingEntry $entry): array
     {
         $class = $entry->content['class'] ?? null;
 
-        if (! $class) {
+        if (! is_string($class) || $class === '') {
             return [];
         }
 
         $tags = [];
 
         if ($this->includeExceptionClass) {
-            // e.g. "exception:ValidationException"
             $tags[] = 'exception:' . class_basename($class);
-            // Full namespaced tag for precise filtering
             $tags[] = 'exception-fqn:' . str_replace('\\', '.', $class);
         }
 

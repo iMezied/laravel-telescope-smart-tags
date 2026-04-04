@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags\TagResolvers;
 
 use Laravel\Telescope\EntryType;
@@ -7,30 +9,13 @@ use Laravel\Telescope\IncomingEntry;
 
 class RouteGroupTagResolver implements TagResolverInterface
 {
+    /**
+     * @param  array<string, string>  $prefixMap       URI prefix  => tag name (longest match wins)
+     * @param  array<string, string>  $routeNamePrefixMap  Route name prefix => tag name
+     */
     public function __construct(
-        /**
-         * Map of URI prefix patterns => tag name.
-         *
-         * Example:
-         * [
-         *   'api/v1'   => 'group:api-v1',
-         *   'api'      => 'group:api',
-         *   'webhook'  => 'group:webhook',
-         *   'admin'    => 'group:admin',
-         * ]
-         */
-        protected array $prefixMap = [],
-
-        /**
-         * Map of route name prefixes => tag name.
-         *
-         * Example:
-         * [
-         *   'api.'     => 'group:api',
-         *   'admin.'   => 'group:admin',
-         * ]
-         */
-        protected array $routeNamePrefixMap = [],
+        private readonly array $prefixMap = [],
+        private readonly array $routeNamePrefixMap = [],
     ) {}
 
     public function supports(IncomingEntry $entry): bool
@@ -38,26 +23,28 @@ class RouteGroupTagResolver implements TagResolverInterface
         return $entry->type === EntryType::REQUEST;
     }
 
+    /** @return list<string> */
     public function resolve(IncomingEntry $entry): array
     {
-        $tags = [];
-        $uri  = ltrim($entry->content['uri'] ?? '', '/');
-        $routeName = $entry->content['controller_action'] ?? '';
+        $tags      = [];
+        $uri       = ltrim((string) ($entry->content['uri'] ?? ''), '/');
+        $routeName = (string) ($entry->content['controller_action'] ?? '');
 
-        // Match URI prefix patterns (longest match wins)
+        // URI prefix match — longest prefix wins
         $matchedPrefixes = [];
+
         foreach ($this->prefixMap as $prefix => $tag) {
             if (str_starts_with($uri, ltrim($prefix, '/'))) {
                 $matchedPrefixes[strlen($prefix)] = $tag;
             }
         }
 
-        if (! empty($matchedPrefixes)) {
-            krsort($matchedPrefixes); // Longest prefix first
+        if ($matchedPrefixes !== []) {
+            krsort($matchedPrefixes);
             $tags[] = reset($matchedPrefixes);
         }
 
-        // Match route name prefixes
+        // Route name prefix match
         foreach ($this->routeNamePrefixMap as $namePrefix => $tag) {
             if (str_starts_with($routeName, $namePrefix)) {
                 $tags[] = $tag;
@@ -65,6 +52,6 @@ class RouteGroupTagResolver implements TagResolverInterface
             }
         }
 
-        return array_unique($tags);
+        return array_values(array_unique($tags));
     }
 }

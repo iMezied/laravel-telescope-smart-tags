@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezied\TelescopeSmartTags;
 
 use Illuminate\Support\ServiceProvider;
@@ -22,11 +24,8 @@ class TelescopeSmartTagsServiceProvider extends ServiceProvider
             'telescope-smart-tags'
         );
 
-        $this->app->singleton(TagRegistry::class, function () {
-            return $this->buildRegistry();
-        });
+        $this->app->singleton(TagRegistry::class, fn () => $this->buildRegistry());
 
-        // Alias for convenience
         $this->app->alias(TagRegistry::class, 'telescope-smart-tags');
     }
 
@@ -36,73 +35,66 @@ class TelescopeSmartTagsServiceProvider extends ServiceProvider
             __DIR__ . '/../config/telescope-smart-tags.php' => config_path('telescope-smart-tags.php'),
         ], 'telescope-smart-tags-config');
 
-        // Bail out if Telescope isn't installed or the package is disabled
         if (! class_exists(Telescope::class) || ! config('telescope-smart-tags.enabled', true)) {
             return;
         }
 
         $registry = $this->app->make(TagRegistry::class);
 
-        Telescope::tag(function (IncomingEntry $entry) use ($registry): array {
+        Telescope::tag(static function (IncomingEntry $entry) use ($registry): array {
             return $registry->resolve($entry);
         });
     }
 
-    protected function buildRegistry(): TagRegistry
+    private function buildRegistry(): TagRegistry
     {
-        $config   = config('telescope-smart-tags');
+        /** @var array<string, mixed> $config */
+        $config   = config('telescope-smart-tags', []);
         $registry = new TagRegistry();
 
-        // --- HTTP Status ---
         if ($config['resolvers']['http_status'] ?? true) {
             $registry->add(new HttpStatusTagResolver(
-                includeExactStatus:    $config['http_status']['include_exact']   ?? true,
-                includeStatusFamily:   $config['http_status']['include_family']  ?? true,
-                includeSemanticAlias:  $config['http_status']['include_semantic'] ?? true,
-                customSemanticMap:     $config['http_status']['custom_map']       ?? [],
+                includeExactStatus:   (bool) ($config['http_status']['include_exact']    ?? true),
+                includeStatusFamily:  (bool) ($config['http_status']['include_family']   ?? true),
+                includeSemanticAlias: (bool) ($config['http_status']['include_semantic'] ?? true),
+                customSemanticMap:   (array) ($config['http_status']['custom_map']       ?? []),
             ));
         }
 
-        // --- Exceptions ---
         if ($config['resolvers']['exceptions'] ?? true) {
             $registry->add(new ExceptionTagResolver(
-                includeExceptionClass:  $config['exceptions']['include_class']  ?? true,
-                includeExceptionFamily: $config['exceptions']['include_family'] ?? true,
-                exceptionFamilyMap:     $config['exceptions']['custom_family_map'] ?? [],
+                includeExceptionClass:  (bool)  ($config['exceptions']['include_class']      ?? true),
+                includeExceptionFamily: (bool)  ($config['exceptions']['include_family']     ?? true),
+                exceptionFamilyMap:     (array) ($config['exceptions']['custom_family_map']  ?? []),
             ));
         }
 
-        // --- Slow Requests ---
         if ($config['resolvers']['slow_requests'] ?? true) {
             $registry->add(new SlowRequestTagResolver(
-                warnThresholdMs:     $config['slow_requests']['warn_ms']     ?? 1000,
-                criticalThresholdMs: $config['slow_requests']['critical_ms'] ?? 3000,
+                warnThresholdMs:     (int) ($config['slow_requests']['warn_ms']     ?? 1000),
+                criticalThresholdMs: (int) ($config['slow_requests']['critical_ms'] ?? 3000),
             ));
         }
 
-        // --- Slow Queries ---
         if ($config['resolvers']['slow_queries'] ?? true) {
             $registry->add(new SlowQueryTagResolver(
-                warnThresholdMs:     $config['slow_queries']['warn_ms']     ?? 500,
-                criticalThresholdMs: $config['slow_queries']['critical_ms'] ?? 2000,
+                warnThresholdMs:     (int) ($config['slow_queries']['warn_ms']     ?? 500),
+                criticalThresholdMs: (int) ($config['slow_queries']['critical_ms'] ?? 2000),
             ));
         }
 
-        // --- Route Groups ---
         if ($config['resolvers']['route_groups'] ?? false) {
             $registry->add(new RouteGroupTagResolver(
-                prefixMap:          $config['route_groups']['prefix_map']       ?? [],
-                routeNamePrefixMap: $config['route_groups']['route_name_map']   ?? [],
+                prefixMap:          (array) ($config['route_groups']['prefix_map']     ?? []),
+                routeNamePrefixMap: (array) ($config['route_groups']['route_name_map'] ?? []),
             ));
         }
 
-        // --- Auth Context ---
         if ($config['resolvers']['auth_context'] ?? false) {
             $registry->add(new AuthContextTagResolver());
         }
 
-        // --- Custom Resolvers ---
-        foreach ($config['custom_resolvers'] ?? [] as $resolverClass) {
+        foreach ((array) ($config['custom_resolvers'] ?? []) as $resolverClass) {
             $resolver = $this->app->make($resolverClass);
 
             if ($resolver instanceof TagResolverInterface) {
