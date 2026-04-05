@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.3] - 2026-04-05
+
+### Fixed
+- Moved resolver and test classes into PSR-4-compliant directories (`TagResolvers/`, `Tests/`) so classes like `Imezied\\TelescopeSmartTags\\TagResolvers\\HttpStatusTagResolver` autoload correctly during Laravel package discovery.
+- Renamed misaligned test filename to match class name (`SlowRequestTagResolverTest`).
+- Updated `phpunit.xml` test and coverage paths to match the current project structure.
+
+---
+
 ## [2.0.2] - 2026-04-05
 
 ### Fixed

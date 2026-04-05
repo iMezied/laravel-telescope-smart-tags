@@ -7,17 +7,20 @@
 >
     <testsuites>
         <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+            <directory>Tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory>tests/Feature</directory>
+            <directory>Tests/Feature</directory>
         </testsuite>
     </testsuites>
 
     <coverage>
         <include>
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">.</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">Tests/</directory>
+        </exclude>
     </coverage>
 
     <php>
