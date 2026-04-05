@@ -20,7 +20,7 @@ class TelescopeSmartTagsServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/telescope-smart-tags.php',
+            __DIR__ . '/telescope-smart-tags.php',
             'telescope-smart-tags'
         );
 
@@ -32,7 +32,7 @@ class TelescopeSmartTagsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/telescope-smart-tags.php' => config_path('telescope-smart-tags.php'),
+            __DIR__ . '/telescope-smart-tags.php' => config_path('telescope-smart-tags.php'),
         ], 'telescope-smart-tags-config');
 
         if (! class_exists(Telescope::class) || ! config('telescope-smart-tags.enabled', true)) {

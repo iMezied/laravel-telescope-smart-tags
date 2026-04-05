@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.2] - 2026-04-05
+
+### Fixed
+- Corrected `mergeConfigFrom()` and `publishes()` config file paths in the service provider to match the root-level package layout, fixing install-time `package:discover` errors on Laravel 11+.
+
+---
+
 ## [2.0.1] - 2026-04-05
 
 ### Fixed
