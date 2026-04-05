@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.1] - 2026-04-05
+
+### Fixed
+- Composer PSR-4 autoload paths now match the package file layout (root-level classes), fixing Laravel package discovery errors like `Class "Imezied\\TelescopeSmartTags\\TelescopeSmartTagsServiceProvider" not found` after install.
+
+---
+
 ## [2.0.0] - 2026-04-04
 
 ### Added

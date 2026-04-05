@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Imezied\\TelescopeSmartTags\\": "src/"
+            "Imezied\\TelescopeSmartTags\\": ""
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Imezied\\TelescopeSmartTags\\Tests\\": "tests/"
+            "Imezied\\TelescopeSmartTags\\Tests\\": ""
         }
     },
     "extra": {
