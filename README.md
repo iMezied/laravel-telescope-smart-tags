@@ -1,10 +1,10 @@
 # 🔖 telescope-smart-tags
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/mezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/mezied/telescope-smart-tags)
-[![Tests](https://img.shields.io/github/actions/workflow/status/mezied/telescope-smart-tags/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mezied/telescope-smart-tags/actions/workflows/tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/mezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/mezied/telescope-smart-tags)
-[![PHP Version](https://img.shields.io/packagist/php-v/mezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/mezied/telescope-smart-tags)
-[![License](https://img.shields.io/packagist/l/mezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/mezied/telescope-smart-tags)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/imezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/imezied/telescope-smart-tags)
+[![Tests](https://img.shields.io/github/actions/workflow/status/imezied/telescope-smart-tags/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/imezied/telescope-smart-tags/actions/workflows/tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/imezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/imezied/telescope-smart-tags)
+[![PHP Version](https://img.shields.io/packagist/php-v/imezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/imezied/telescope-smart-tags)
+[![License](https://img.shields.io/packagist/l/imezied/telescope-smart-tags.svg?style=flat-square)](https://packagist.org/packages/imezied/telescope-smart-tags)
 
 **Smart, zero-config auto-tagging for Laravel Telescope.**
 
@@ -49,7 +49,7 @@ family:database      → all DB-related exceptions
 ## Installation
 
 ```bash
-composer require mezied/telescope-smart-tags --dev
+composer require imezied/telescope-smart-tags --dev
 ```
 
 That's it. The package auto-discovers and registers itself via Laravel's service provider. All resolvers are active by default with sensible defaults.
@@ -221,7 +221,7 @@ namespace App\Telescope;
 
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\IncomingEntry;
-use Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
+use imezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
 
 class CarrierTagResolver implements TagResolverInterface
 {
@@ -274,7 +274,7 @@ class TenantTagResolver implements TagResolverInterface
 You can also interact with the `TagRegistry` directly in a service provider:
 
 ```php
-use Mezied\TelescopeSmartTags\TagRegistry;
+use imezied\TelescopeSmartTags\TagRegistry;
 
 public function boot(): void
 {
@@ -315,7 +315,7 @@ Each resolver is independently toggled, zero overhead if disabled.
 ## Testing Your Custom Resolver
 
 ```php
-use Mezied\TelescopeSmartTags\Tests\TestCase;
+use imezied\TelescopeSmartTags\Tests\TestCase;
 use App\Telescope\CarrierTagResolver;
 
 class CarrierTagResolverTest extends TestCase

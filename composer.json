@@ -1,13 +1,13 @@
 {
-    "name": "mezied/telescope-smart-tags",
+    "name": "imezied/telescope-smart-tags",
     "description": "Smart, configurable auto-tagging for Laravel Telescope — tag requests by HTTP status, exceptions, slow response times, route groups, and more.",
     "keywords": ["laravel", "telescope", "debugging", "tagging", "monitoring", "observability"],
-    "homepage": "https://github.com/mezied/telescope-smart-tags",
+    "homepage": "https://github.com/imezied/telescope-smart-tags",
     "license": "MIT",
     "authors": [
         {
-            "name": "Mezied",
-            "email": "hello@mezied.dev",
+            "name": "iMezied",
+            "email": "imezied@gmail.com",
             "role": "Developer"
         }
     ],
@@ -24,18 +24,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Mezied\\TelescopeSmartTags\\": "src/"
+            "Imezied\\TelescopeSmartTags\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mezied\\TelescopeSmartTags\\Tests\\": "tests/"
+            "Imezied\\TelescopeSmartTags\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Mezied\\TelescopeSmartTags\\TelescopeSmartTagsServiceProvider"
+                "Imezied\\TelescopeSmartTags\\TelescopeSmartTagsServiceProvider"
             ]
         }
     },

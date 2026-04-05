@@ -5,7 +5,7 @@ Thank you for considering contributing to `telescope-smart-tags`!
 ## Local Setup
 
 ```bash
-git clone https://github.com/mezied/telescope-smart-tags
+git clone https://github.com/imezied/telescope-smart-tags
 cd telescope-smart-tags
 composer install
 ```
@@ -31,7 +31,7 @@ Every resolver must implement `TagResolverInterface`:
 
 ```php
 use Laravel\Telescope\IncomingEntry;
-use Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
+use Imezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
 
 class MyResolver implements TagResolverInterface
 {

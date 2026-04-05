@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mezied\TelescopeSmartTags\TagResolvers;
+namespace Imezied\TelescopeSmartTags\TagResolvers;
 
 use Laravel\Telescope\IncomingEntry;
 

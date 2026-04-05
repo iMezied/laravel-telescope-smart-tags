@@ -1,9 +1,9 @@
 <?php
 
-namespace Mezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
+namespace Imezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
 
-use Mezied\TelescopeSmartTags\TagResolvers\RouteGroupTagResolver;
-use Mezied\TelescopeSmartTags\Tests\TestCase;
+use Imezied\TelescopeSmartTags\TagResolvers\RouteGroupTagResolver;
+use Imezied\TelescopeSmartTags\Tests\TestCase;
 
 class RouteGroupTagResolverTest extends TestCase
 {

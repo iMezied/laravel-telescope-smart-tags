@@ -1,9 +1,9 @@
 <?php
 
-namespace Mezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
+namespace Imezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
 
-use Mezied\TelescopeSmartTags\TagResolvers\HttpStatusTagResolver;
-use Mezied\TelescopeSmartTags\Tests\TestCase;
+use Imezied\TelescopeSmartTags\TagResolvers\HttpStatusTagResolver;
+use Imezied\TelescopeSmartTags\Tests\TestCase;
 
 class HttpStatusTagResolverTest extends TestCase
 {

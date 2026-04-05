@@ -1,11 +1,11 @@
 <?php
 
-namespace Mezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
+namespace Imezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
 
-use Mezied\TelescopeSmartTags\TagRegistry;
-use Mezied\TelescopeSmartTags\TagResolvers\HttpStatusTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\SlowRequestTagResolver;
-use Mezied\TelescopeSmartTags\Tests\TestCase;
+use Imezied\TelescopeSmartTags\TagRegistry;
+use Imezied\TelescopeSmartTags\TagResolvers\HttpStatusTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\SlowRequestTagResolver;
+use Imezied\TelescopeSmartTags\Tests\TestCase;
 
 class SlowRequestTagResolverTest extends TestCase
 {

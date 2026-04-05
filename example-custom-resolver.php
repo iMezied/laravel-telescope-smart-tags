@@ -13,7 +13,7 @@ namespace App\Telescope;
 
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\IncomingEntry;
-use Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
+use Imezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
 
 /**
  * Tags requests by carrier name for multi-carrier logistics platforms.

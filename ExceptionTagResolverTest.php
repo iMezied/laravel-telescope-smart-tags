@@ -1,9 +1,9 @@
 <?php
 
-namespace Mezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
+namespace Imezied\TelescopeSmartTags\Tests\Unit\TagResolvers;
 
-use Mezied\TelescopeSmartTags\TagResolvers\ExceptionTagResolver;
-use Mezied\TelescopeSmartTags\Tests\TestCase;
+use Imezied\TelescopeSmartTags\TagResolvers\ExceptionTagResolver;
+use Imezied\TelescopeSmartTags\Tests\TestCase;
 
 class ExceptionTagResolverTest extends TestCase
 {

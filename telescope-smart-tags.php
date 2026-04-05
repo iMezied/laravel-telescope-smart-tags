@@ -118,7 +118,7 @@ return [
     | Custom Resolvers
     |--------------------------------------------------------------------------
     | Register your own resolver classes. Each must implement:
-    | Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface
+    | Imezied\TelescopeSmartTags\TagResolvers\TagResolverInterface
     |
     | They are resolved through the Laravel service container, so you can
     | inject dependencies into their constructors.

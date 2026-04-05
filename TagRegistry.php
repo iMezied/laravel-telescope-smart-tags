@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Mezied\TelescopeSmartTags;
+namespace Imezied\TelescopeSmartTags;
 
 use Laravel\Telescope\IncomingEntry;
-use Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
+use Imezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
 
 class TagRegistry
 {

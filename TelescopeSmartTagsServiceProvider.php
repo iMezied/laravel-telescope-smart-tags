@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Mezied\TelescopeSmartTags;
+namespace Imezied\TelescopeSmartTags;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
-use Mezied\TelescopeSmartTags\TagResolvers\AuthContextTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\ExceptionTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\HttpStatusTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\RouteGroupTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\SlowQueryTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\SlowRequestTagResolver;
-use Mezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
+use Imezied\TelescopeSmartTags\TagResolvers\AuthContextTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\ExceptionTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\HttpStatusTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\RouteGroupTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\SlowQueryTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\SlowRequestTagResolver;
+use Imezied\TelescopeSmartTags\TagResolvers\TagResolverInterface;
 
 class TelescopeSmartTagsServiceProvider extends ServiceProvider
 {

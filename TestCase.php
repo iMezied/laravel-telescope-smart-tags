@@ -1,6 +1,6 @@
 <?php
 
-namespace Mezied\TelescopeSmartTags\Tests;
+namespace Imezied\TelescopeSmartTags\Tests;
 
 use Laravel\Telescope\IncomingEntry;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -11,7 +11,7 @@ abstract class TestCase extends BaseTestCase
     {
         return [
             \Laravel\Telescope\TelescopeServiceProvider::class,
-            \Mezied\TelescopeSmartTags\TelescopeSmartTagsServiceProvider::class,
+            \Imezied\TelescopeSmartTags\TelescopeSmartTagsServiceProvider::class,
         ];
     }
 
